@@ -66,8 +66,13 @@ libmm-vdec-inc          := bionic/libc/include
 libmm-vdec-inc          += bionic/libstdc++/include
 libmm-vdec-inc          += $(LOCAL_PATH)/inc 
 libmm-vdec-inc          += $(OMX_VIDEO_PATH)/vidc/common/inc
+<<<<<<< HEAD
 libmm-vdec-inc          += hardware/qcom/media-caf/mm-core/inc
 libmm-vdec-inc          += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
+=======
+libmm-vdec-inc          += hardware/qcom/media/mm-core/inc
+#libmm-vdec-inc          += bionic/libc/kernel/common/linux
+>>>>>>> parent of 278952f... mm-video: Use msm ion header file
 #DRM include - Interface which loads the DRM library
 libmm-vdec-inc	        += $(OMX_VIDEO_PATH)/DivxDrmDecrypt/inc
 libmm-vdec-inc          += $(call project-path-for,qcom-display)/$(PLATFORM)/libgralloc
@@ -117,7 +122,11 @@ include $(CLEAR_VARS)
 
 mm-vdec-test-inc    := hardware/qcom/media-caf/mm-core/inc
 mm-vdec-test-inc    += $(LOCAL_PATH)/inc
+<<<<<<< HEAD
 mm-vdec-test-inc    += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
+=======
+#mm-vdec-test-inc    += bionic/libc/kernel/common/linux
+>>>>>>> parent of 278952f... mm-video: Use msm ion header file
 
 LOCAL_MODULE                    := mm-vdec-omx-test
 LOCAL_MODULE_TAGS               := debug
@@ -141,7 +150,11 @@ include $(CLEAR_VARS)
 
 mm-vdec-drv-test-inc    := hardware/qcom/media-caf/mm-core/inc
 mm-vdec-drv-test-inc    += $(LOCAL_PATH)/inc
+<<<<<<< HEAD
 mm-vdec-drv-test-inc    += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
+=======
+#mm-vdec-drv-test-inc    += bionic/libc/kernel/common/linux
+>>>>>>> parent of 278952f... mm-video: Use msm ion header file
 
 LOCAL_MODULE                    := mm-video-driver-test
 LOCAL_MODULE_TAGS               := debug

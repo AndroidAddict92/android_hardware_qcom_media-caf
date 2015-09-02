@@ -35,7 +35,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <linux/android_pmem.h>
 #include <media/hardware/HardwareAPI.h>
 #ifdef USE_ION
-#include <linux/msm_ion.h>
+#include <ion_msm.h>
 #endif
 #ifdef _ANDROID_
 #include <cutils/properties.h>
