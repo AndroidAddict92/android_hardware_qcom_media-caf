@@ -2244,7 +2244,7 @@ OMX_ERRORTYPE  omx_video::use_input_buffer(
 #ifdef USE_ION
       m_pInput_ion[i].ion_device_fd = alloc_map_ion_memory(m_sInPortDef.nBufferSize,
                                       &m_pInput_ion[i].ion_alloc_data,
-                                      &m_pInput_ion[i].fd_ion_data,ION_FLAG_CACHED);
+                                      &m_pInput_ion[i].fd_ion_data,CACHED);
       if(m_pInput_ion[i].ion_device_fd < 0) {
         DEBUG_PRINT_ERROR("\nERROR:ION device open() Failed");
         return OMX_ErrorInsufficientResources;
@@ -2445,7 +2445,7 @@ OMX_ERRORTYPE  omx_video::use_output_buffer(
         m_pOutput_ion[i].ion_device_fd = alloc_map_ion_memory(
                                          m_sOutPortDef.nBufferSize,
                                          &m_pOutput_ion[i].ion_alloc_data,
-                                         &m_pOutput_ion[i].fd_ion_data,ION_FLAG_CACHED);
+                                         &m_pOutput_ion[i].fd_ion_data,CACHED);
       if(m_pOutput_ion[i].ion_device_fd < 0) {
         DEBUG_PRINT_ERROR("\nERROR:ION device open() Failed");
         return OMX_ErrorInsufficientResources;
@@ -2880,7 +2880,11 @@ OMX_ERRORTYPE  omx_video::allocate_input_buffer(
 #ifdef USE_ION
     m_pInput_ion[i].ion_device_fd = alloc_map_ion_memory(m_sInPortDef.nBufferSize,
                                     &m_pInput_ion[i].ion_alloc_data,
+<<<<<<< HEAD
                                     &m_pInput_ion[i].fd_ion_data, flags);
+=======
+                                    &m_pInput_ion[i].fd_ion_data,CACHED);
+>>>>>>> parent of 4795692... mm-video: port heap mask change to ion.
     if(m_pInput_ion[i].ion_device_fd < 0) {
       DEBUG_PRINT_ERROR("\nERROR:ION device open() Failed");
       return OMX_ErrorInsufficientResources;
@@ -3039,7 +3043,7 @@ OMX_ERRORTYPE  omx_video::allocate_output_buffer(
 #ifdef USE_ION
       m_pOutput_ion[i].ion_device_fd = alloc_map_ion_memory(m_sOutPortDef.nBufferSize,
                                        &m_pOutput_ion[i].ion_alloc_data,
-                                       &m_pOutput_ion[i].fd_ion_data,ION_FLAG_CACHED);
+                                       &m_pOutput_ion[i].fd_ion_data,CACHED);
       if(m_pOutput_ion[i].ion_device_fd < 0) {
         DEBUG_PRINT_ERROR("\nERROR:ION device open() Failed");
         return OMX_ErrorInsufficientResources;
@@ -4456,13 +4460,26 @@ int omx_video::alloc_map_ion_memory(int size,struct ion_allocation_data *alloc_d
     DEBUG_PRINT_ERROR("\nInvalid input to alloc_map_ion_memory");
     return -EINVAL;
 	}
+<<<<<<< HEAD
         ion_device_fd = m_venc_ion_devicefd;
         if(ion_device_fd <= 0) {
            DEBUG_PRINT_ERROR("\nERROR: Invalid ION Device fd = %d", ion_device_fd);
+=======
+        if(!secure_session && flag == CACHED) {
+             ion_dev_flags = O_RDONLY;
+	} else {
+             ion_dev_flags = O_RDONLY | O_DSYNC;
+        }
+        ion_device_fd = open (MEM_DEVICE,ion_dev_flags);
+        if(ion_device_fd < 0)
+        {
+           DEBUG_PRINT_ERROR("\nERROR: ION Device open() Failed");
+>>>>>>> parent of 4795692... mm-video: port heap mask change to ion.
            return ion_device_fd;
         }
         alloc_data->len = size;
         alloc_data->align = 4096;
+<<<<<<< HEAD
         alloc_data->flags = 0;
         if(!secure_session && (flag & ION_FLAG_CACHED))
         {
@@ -4475,14 +4492,20 @@ int omx_video::alloc_map_ion_memory(int size,struct ion_allocation_data *alloc_d
           DEBUG_PRINT_HIGH("uncache buffers requested, flags = 0x%x",
              alloc_data->flags);
         }
+=======
+>>>>>>> parent of 4795692... mm-video: port heap mask change to ion.
 
         if (secure_session)
-           alloc_data->heap_mask = (ION_HEAP(MEM_HEAP_ID) | ION_SECURE);
+           alloc_data->flags = (ION_HEAP(MEM_HEAP_ID) | ION_SECURE);
         else
+<<<<<<< HEAD
 #ifdef MAX_RES_720P
            alloc_data->heap_mask = ION_HEAP(MEM_HEAP_ID);
 #else
            alloc_data->heap_mask = (ION_HEAP(MEM_HEAP_ID) |
+=======
+           alloc_data->flags = (ION_HEAP(MEM_HEAP_ID) |
+>>>>>>> parent of 4795692... mm-video: port heap mask change to ion.
                 ION_HEAP(ION_IOMMU_HEAP_ID));
 #endif
         pthread_mutex_lock(&m_venc_ionlock);
