@@ -298,6 +298,7 @@ struct enc_ion
 {
    int ion_device_fd;
    struct ion_allocation_data alloc_data;
+   unsigned int heap_mask;
    struct ion_fd_data ion_alloc_fd;
 };
 #endif
